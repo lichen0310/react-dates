@@ -9,10 +9,12 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
+/* eslint-disable no-underscore-dangle */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { forbidExtraProps, mutuallyExclusiveProps, nonNegativeInteger } from 'airbnb-prop-types';
 import { css, withStyles, withStylesPropTypes } from 'react-with-styles';
+import momentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import throttle from 'lodash/throttle';
 import isTouchDevice from 'is-touch-device';
@@ -43,6 +45,8 @@ var propTypes = process.env.NODE_ENV !== "production" ? forbidExtraProps(_object
   // calendar presentation props
   enableOutsideDays: PropTypes.bool,
   onDatesChange: PropTypes.func,
+  startDate: momentPropTypes.momentObj,
+  endDate: momentPropTypes.momentObj,
   numberOfMonths: PropTypes.number,
   orientation: ScrollableOrientationShape,
   withPortal: PropTypes.bool,
@@ -105,6 +109,8 @@ export var defaultProps = {
   enableOutsideDays: false,
   numberOfMonths: 2,
   onDatesChange: function onDatesChange() {},
+  startDate: moment(),
+  endDate: moment(),
   orientation: HORIZONTAL_ORIENTATION,
   withPortal: false,
   onOutsideClick: function onOutsideClick() {},
@@ -1093,21 +1099,21 @@ function (_ref) {
       transitionDuration: transitionDuration,
       verticalBorderSpacing: verticalBorderSpacing,
       horizontalMonthPadding: horizontalMonthPadding
-    }), verticalScrollable && this.renderNavigation()), React.createElement("div", css(styles.DayPicker_CalendarFooter), React.createElement("p", _extends({}, css(styles.DayPicker_CalendarFooterText), {
+    }), verticalScrollable && this.renderNavigation()), React.createElement("div", css(styles.DayPicker_CalendarFooter), React.createElement("p", _extends({}, this.props.startDate && moment(this.props.startDate._d).format('YYYY MM DD') === moment(moment().subtract(13, 'days')._d).format('YYYY MM DD') && moment(this.props.endDate._d).format('YYYY MM DD') === moment().format('YYYY MM DD') ? _objectSpread({}, css(styles.DayPicker_CalendarFooterTextActive)) : _objectSpread({}, css(styles.DayPicker_CalendarFooterText)), {
       onClick: function onClick() {
         return _this6.props.onDatesChange({
           startDate: moment().subtract(13, 'days'),
           endDate: moment()
         });
       }
-    }), "Last 14 days"), React.createElement("p", _extends({}, css(styles.DayPicker_CalendarFooterText), {
+    }), "Last 14 days"), React.createElement("p", _extends({}, this.props.startDate && moment(this.props.startDate._d).format('YYYY MM DD') === moment(moment().subtract(29, 'days')._d).format('YYYY MM DD') && moment(this.props.endDate._d).format('YYYY MM DD') === moment().format('YYYY MM DD') ? _objectSpread({}, css(styles.DayPicker_CalendarFooterTextActive)) : _objectSpread({}, css(styles.DayPicker_CalendarFooterText)), {
       onClick: function onClick() {
         return _this6.props.onDatesChange({
           startDate: moment().subtract(29, 'days'),
           endDate: moment()
         });
       }
-    }), "Last 30 days"), React.createElement("p", _extends({}, css(styles.DayPicker_CalendarFooterText), {
+    }), "Last 30 days"), React.createElement("p", _extends({}, this.props.startDate && moment(this.props.startDate._d).format('YYYY MM DD') === moment(moment().subtract(59, 'days')._d).format('YYYY MM DD') && moment(this.props.endDate._d).format('YYYY MM DD') === moment().format('YYYY MM DD') ? _objectSpread({}, css(styles.DayPicker_CalendarFooterTextActive)) : _objectSpread({}, css(styles.DayPicker_CalendarFooterText)), {
       onClick: function onClick() {
         return _this6.props.onDatesChange({
           startDate: moment().subtract(59, 'days'),
@@ -1178,6 +1184,11 @@ export default withStyles(function (_ref3) {
     DayPicker_CalendarFooterText: {
       cursor: 'pointer',
       marginRight: '30px'
+    },
+    DayPicker_CalendarFooterTextActive: {
+      cursor: 'pointer',
+      marginRight: '30px',
+      color: '#eb5929'
     },
     DayPicker_calendarInfo__horizontal: {
       display: 'inline-block',

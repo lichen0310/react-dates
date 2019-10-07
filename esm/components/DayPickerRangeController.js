@@ -1145,6 +1145,8 @@ function (_ref) {
       onDayClick: this.onDayClick,
       onDayMouseEnter: this.onDayMouseEnter,
       onDatesChange: this.props.onDatesChange,
+      startDate: this.props.startDate,
+      endDate: this.props.endDate,
       onDayMouseLeave: this.onDayMouseLeave,
       onPrevMonthClick: this.onPrevMonthClick,
       onNextMonthClick: this.onNextMonthClick,

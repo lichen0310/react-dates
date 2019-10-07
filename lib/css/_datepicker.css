@@ -602,6 +602,11 @@
   cursor: pointer;
   margin-right: 30px
 }
+.DayPicker_CalendarFooterTextActive {
+  cursor: pointer;
+  margin-right: 30px;
+  color: #eb5929
+}
 .DayPicker_calendarInfo__horizontal,
 .DayPicker_wrapper__horizontal {
   display: inline-block;
